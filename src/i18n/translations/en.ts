@@ -7,6 +7,7 @@ export const en: TranslationSchema = {
     projects: 'Projects',
     opportunities: 'Volunteer',
     impact: 'Impact Data',
+    pricing: 'Pricing',
     notifications: 'Notifications',
     noNotifications: 'No notifications',
     switchRole: 'Switch/Register',

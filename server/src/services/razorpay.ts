@@ -22,12 +22,41 @@ if (!isRazorpayLiveConfigured) {
 }
 
 // Razorpay SDK instance
-let razorpayClient: any = null;
+let razorpayClient: InstanceType<typeof Razorpay> | null = null;
 if (isRazorpayLiveConfigured) {
   razorpayClient = new Razorpay({
     key_id: keyId,
     key_secret: keySecret,
   });
+}
+
+interface RazorpaySubscriptionResult {
+  id: string;
+  status: string;
+  current_start?: number;
+  current_end?: number;
+}
+
+interface RazorpayCancelResult {
+  id: string;
+  status: string;
+  ended_at?: number;
+}
+
+interface RazorpayFetchResult {
+  id: string;
+  status: string;
+  current_start?: number;
+  current_end?: number;
+}
+
+function getErrorMessage(err: unknown): string {
+  if (err instanceof Error) return err.message;
+  if (typeof err === 'object' && err !== null && 'error' in err) {
+    const inner = (err as { error?: { description?: string } }).error;
+    if (inner?.description) return inner.description;
+  }
+  return 'Unknown Razorpay error';
 }
 
 export const RazorpayService = {
@@ -44,7 +73,7 @@ export const RazorpayService = {
     userEmail: string;
     totalCount?: number;
     notes?: Record<string, string>;
-  }): Promise<{ id: string; status: string; current_start?: number; current_end?: number }> => {
+  }): Promise<RazorpaySubscriptionResult> => {
     if (isRazorpayLiveConfigured && razorpayClient) {
       try {
         const response = await razorpayClient.subscriptions.create({
@@ -59,8 +88,8 @@ export const RazorpayService = {
             ...(params.notes || {}),
           },
         });
-        return response;
-      } catch (err: any) {
+        return response as RazorpaySubscriptionResult;
+      } catch (err: unknown) {
         console.error('[RazorpayService] Error creating Razorpay subscription:', err);
         if (process.env.NODE_ENV !== 'production') {
           console.warn('[RazorpayService] Dev fallback: Razorpay API rejected credentials or plan ID. Generating mock subscription for local testing.');
@@ -73,7 +102,7 @@ export const RazorpayService = {
             current_end: nowSec + 30 * 86400,
           };
         }
-        throw new Error(err?.error?.description || err.message || 'Razorpay subscription creation failed');
+        throw new Error(getErrorMessage(err), { cause: err });
       }
     }
 
@@ -94,12 +123,12 @@ export const RazorpayService = {
   cancelSubscription: async (
     subscriptionId: string,
     cancelAtCycleEnd = true
-  ): Promise<{ id: string; status: string; ended_at?: number }> => {
+  ): Promise<RazorpayCancelResult> => {
     if (isRazorpayLiveConfigured && razorpayClient) {
       try {
         const response = await razorpayClient.subscriptions.cancel(subscriptionId, cancelAtCycleEnd);
-        return response;
-      } catch (err: any) {
+        return response as RazorpayCancelResult;
+      } catch (err: unknown) {
         console.error('[RazorpayService] Error canceling Razorpay subscription:', err);
         if (process.env.NODE_ENV !== 'production') {
           console.warn('[RazorpayService] Dev fallback: Returning mock subscription cancellation.');
@@ -109,7 +138,7 @@ export const RazorpayService = {
             ended_at: Math.floor(Date.now() / 1000) + 30 * 86400,
           };
         }
-        throw new Error(err?.error?.description || err.message || 'Razorpay cancellation failed');
+        throw new Error(getErrorMessage(err), { cause: err });
       }
     }
 
@@ -123,9 +152,9 @@ export const RazorpayService = {
   /**
    * Fetch current details of a subscription from Razorpay
    */
-  fetchSubscription: async (subscriptionId: string): Promise<any> => {
+  fetchSubscription: async (subscriptionId: string): Promise<RazorpayFetchResult> => {
     if (isRazorpayLiveConfigured && razorpayClient) {
-      return await razorpayClient.subscriptions.fetch(subscriptionId);
+      return await razorpayClient.subscriptions.fetch(subscriptionId) as RazorpayFetchResult;
     }
 
     const nowSec = Math.floor(Date.now() / 1000);

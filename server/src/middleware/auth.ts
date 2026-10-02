@@ -9,12 +9,18 @@ export interface AuthenticatedUser {
 }
 
 // Extend Express Request interface to include authenticated user
-declare global {
-  namespace Express {
-    interface Request {
-      user?: AuthenticatedUser;
-    }
+// Uses module augmentation instead of namespace to satisfy eslint
+declare module 'express-serve-static-core' {
+  interface Request {
+    user?: AuthenticatedUser;
   }
+}
+
+interface SupabaseUserResult {
+  id: string;
+  email?: string;
+  role?: string;
+  user_metadata?: { role?: string };
 }
 
 /**
@@ -38,7 +44,7 @@ export const requireAuth = async (req: Request, res: Response, next: NextFunctio
   }
 
   try {
-    const user = await SupabaseBackendService.verifyAuthToken(token);
+    const user = await SupabaseBackendService.verifyAuthToken(token) as SupabaseUserResult | null;
     if (!user || !user.id) {
       res.status(401).json({ error: 'Unauthorized: Invalid, expired, or revoked Supabase session token.' });
       return;
@@ -47,12 +53,13 @@ export const requireAuth = async (req: Request, res: Response, next: NextFunctio
     req.user = {
       id: user.id,
       email: user.email || '',
-      role: (user as any).user_metadata?.role || (user as any).role,
+      role: user.user_metadata?.role || user.role,
     };
 
     next();
-  } catch (err: any) {
-    console.error('[requireAuth] Authentication error:', err.message);
+  } catch (err: unknown) {
+    const message = err instanceof Error ? err.message : 'Unknown authentication error';
+    console.error('[requireAuth] Authentication error:', message);
     res.status(401).json({ error: 'Unauthorized: Session authentication failed.' });
   }
 };
@@ -116,7 +123,7 @@ export const requirePlan = (minPlan: PlanTier) => {
         currentStatus: status,
         upgradeRequired: true,
       });
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error('[requirePlan] Error evaluating plan access:', err);
       res.status(500).json({ error: 'Internal server error while evaluating subscription access.' });
     }

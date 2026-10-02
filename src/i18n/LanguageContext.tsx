@@ -14,13 +14,13 @@ const STORAGE_KEY = 'ngo_digital_language';
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
-function getNestedValue(obj: any, path: string): string | undefined {
+function getNestedValue(obj: unknown, path: string): string | undefined {
   if (!obj || !path) return undefined;
   const parts = path.split('.');
-  let current = obj;
+  let current: unknown = obj;
   for (const part of parts) {
-    if (current === undefined || current === null) return undefined;
-    current = current[part];
+    if (current === undefined || current === null || typeof current !== 'object') return undefined;
+    current = (current as Record<string, unknown>)[part];
   }
   return typeof current === 'string' ? current : undefined;
 }

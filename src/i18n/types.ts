@@ -13,6 +13,7 @@ export interface TranslationSchema {
     projects: string;
     opportunities: string;
     impact: string;
+    pricing: string;
     notifications: string;
     noNotifications: string;
     switchRole: string;

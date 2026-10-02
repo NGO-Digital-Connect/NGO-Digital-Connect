@@ -7,6 +7,7 @@ export const ta: TranslationSchema = {
     projects: 'திட்டங்கள்',
     opportunities: 'தன்னார்வ சேவை',
     impact: 'தாக்கத் தரவு',
+    pricing: 'கட்டணம் மற்றும் திட்டங்கள்',
     notifications: 'அறிவிப்புகள்',
     noNotifications: 'புதிய அறிவிப்புகள் இல்லை',
     switchRole: 'பங்கு மாற்றம் / பதிவு',

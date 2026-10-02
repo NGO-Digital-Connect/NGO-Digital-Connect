@@ -1,4 +1,5 @@
 import 'dotenv/config';
+import crypto from 'node:crypto';
 import { createClient } from '@supabase/supabase-js';
 import type { PlanTier } from '../config/plans.js';
 
@@ -179,7 +180,7 @@ export const SupabaseBackendService = {
       }
 
       return data as DbSubscription;
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error('[SupabaseBackendService] Exception in upsertSubscription:', err);
       // Fallback cache save
       const fallbackRecord: DbSubscription = {
@@ -250,7 +251,7 @@ export const SupabaseBackendService = {
     }
 
     try {
-      const payload: Record<string, any> = {
+      const payload: Record<string, string | null | undefined> = {
         status: updates.status,
         updated_at: new Date().toISOString(),
       };
@@ -320,7 +321,7 @@ export const SupabaseBackendService = {
   recordPaymentEvent: async (
     eventId: string,
     eventType: string,
-    payload: any
+    payload: unknown
   ): Promise<boolean> => {
     memoryEvents.add(eventId);
 

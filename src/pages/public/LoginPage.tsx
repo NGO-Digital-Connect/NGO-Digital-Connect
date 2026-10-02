@@ -47,9 +47,10 @@ export const LoginPage: React.FC<{ onNavigate: (view: string) => void }> = ({ on
       if (loggedUser) {
         onNavigate(getPortalView(loggedUser.role));
       }
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error('[LoginPage] Login error:', err);
-      setError(err.message || `No account found for email: ${email}. Please check your credentials.`);
+      const message = err instanceof Error ? err.message : `No account found for email: ${email}. Please check your credentials.`;
+      setError(message);
     } finally {
       setIsLoggingIn(false);
     }
