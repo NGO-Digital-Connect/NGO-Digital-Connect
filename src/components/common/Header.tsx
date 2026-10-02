@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useAuth } from '../../store/AuthContext';
 import { useData } from '../../store/DataContext';
+import { useSubscription } from '../../store/SubscriptionContext';
 import { useTranslation } from '../../i18n/LanguageContext';
 import { Icons } from './Icons';
 import { LanguageSwitcher } from './LanguageSwitcher';
@@ -15,6 +16,7 @@ interface HeaderProps {
 export const Header: React.FC<HeaderProps> = ({ currentView, onNavigate }) => {
   const { currentUser, loginAsRole, isSupabaseConnected } = useAuth();
   const { notifications, markNotificationRead, isSyncing } = useData();
+  const { currentPlan } = useSubscription();
   const { t } = useTranslation();
   const [showNotifMenu, setShowNotifMenu] = useState(false);
   const [showMobileMenu, setShowMobileMenu] = useState(false);
@@ -50,6 +52,7 @@ export const Header: React.FC<HeaderProps> = ({ currentView, onNavigate }) => {
     { id: 'projects', labelKey: 'nav.projects' },
     { id: 'opportunities', labelKey: 'nav.opportunities' },
     { id: 'impact', labelKey: 'nav.impact' },
+    { id: 'pricing', labelKey: 'nav.pricing' },
   ];
 
   return (
@@ -249,6 +252,28 @@ export const Header: React.FC<HeaderProps> = ({ currentView, onNavigate }) => {
               {t('roles.' + currentUser.role.toLowerCase(), currentUser.role)} {t('roles.portalName', 'Portal')}
             </span>
             <Icons.ArrowRight size={15} />
+          </button>
+
+          {/* Subscription Tier Badge */}
+          <button
+            onClick={() => onNavigate('pricing')}
+            className="btn btn-secondary btn-sm"
+            style={{
+              height: '36px',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.35rem',
+              borderColor: currentPlan === 'enterprise' ? '#10b981' : currentPlan === 'pro' ? '#38bdf8' : 'var(--border)',
+              background: currentPlan === 'enterprise' ? 'rgba(16, 185, 129, 0.12)' : currentPlan === 'pro' ? 'rgba(56, 189, 248, 0.12)' : 'transparent',
+              color: currentPlan === 'enterprise' ? '#059669' : currentPlan === 'pro' ? '#0284c7' : 'var(--text-secondary)',
+              fontWeight: 700,
+            }}
+            title="Subscription & Plans"
+          >
+            <Icons.Sparkles size={14} color="currentColor" />
+            <span style={{ fontSize: '0.75rem', textTransform: 'uppercase' }}>
+              {currentPlan}
+            </span>
           </button>
 
           {/* Quick Register / Logout */}

@@ -64,6 +64,11 @@ export const Footer: React.FC<{ onNavigate: (view: string) => void }> = ({ onNav
                   {t('footer.impactLink', 'Verifiable Impact Analytics')}
                 </button>
               </li>
+              <li>
+                <button onClick={() => onNavigate('pricing')} style={{ background: 'none', border: 'none', color: '#38bdf8', cursor: 'pointer', textAlign: 'left', padding: 0, fontWeight: 600 }}>
+                  {t('footer.pricingLink', 'Subscription Plans & Pricing')}
+                </button>
+              </li>
             </ul>
           </div>
 

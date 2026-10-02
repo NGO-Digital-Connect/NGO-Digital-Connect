@@ -16,6 +16,8 @@ import { OpportunitiesPage } from './pages/public/OpportunitiesPage';
 import { ImpactPage } from './pages/public/ImpactPage';
 import { LoginPage } from './pages/public/LoginPage';
 import { RegisterPage } from './pages/public/RegisterPage';
+import { PricingPage } from './pages/public/PricingPage';
+import { SubscriptionProvider } from './store/SubscriptionContext';
 
 // Portals
 import { BeneficiaryPortal } from './pages/portals/BeneficiaryPortal';
@@ -27,7 +29,13 @@ import { GovernmentPortal } from './pages/portals/GovernmentPortal';
 import { AdminPortal } from './pages/portals/AdminPortal';
 
 function AppContent() {
-  const [currentView, setCurrentView] = useState<string>('home');
+  const [currentView, setCurrentView] = useState<string>(() => {
+    if (typeof window !== 'undefined') {
+      const path = window.location.pathname.replace(/^\//, '');
+      if (path === 'pricing' || window.location.hash === '#pricing') return 'pricing';
+    }
+    return 'home';
+  });
   const [selectedEntityId, setSelectedEntityId] = useState<string | null>(null);
 
   const handleNavigate = (view: string, id?: string) => {
@@ -37,6 +45,10 @@ function AppContent() {
     } else {
       setSelectedEntityId(null);
     }
+    if (typeof window !== 'undefined') {
+      const newUrl = view === 'home' ? '/' : `/${view}`;
+      window.history.pushState(null, '', newUrl);
+    }
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -44,6 +56,8 @@ function AppContent() {
     switch (currentView) {
       case 'home':
         return <HomePage onNavigate={handleNavigate} />;
+      case 'pricing':
+        return <PricingPage onNavigate={handleNavigate} />;
       case 'ngos':
         return <NgoDirectoryPage onNavigate={handleNavigate} />;
       case 'ngo_detail':
@@ -99,7 +113,9 @@ export default function App() {
       <LanguageProvider>
         <AuthProvider>
           <DataProvider>
-            <AppContent />
+            <SubscriptionProvider>
+              <AppContent />
+            </SubscriptionProvider>
           </DataProvider>
         </AuthProvider>
       </LanguageProvider>

@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect, useCallback, useMemo } from 'react';
-import type { Language, LanguageOption, TranslationSchema } from './types';
+import type { Language, LanguageOption } from './types';
 import { translations, SUPPORTED_LANGUAGES, DEFAULT_LANGUAGE } from './translations';
 
 interface LanguageContextType {

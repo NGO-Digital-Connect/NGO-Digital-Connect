@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useData } from '../../store/DataContext';
 import { useAuth } from '../../store/AuthContext';
+import { useSubscription } from '../../store/SubscriptionContext';
 import { Icons } from '../../components/common/Icons';
 import { StatusBadge, UrgencyBadge } from '../../components/common/Badge';
 import { NgoAssistantModal } from '../../components/ai/NgoAssistantModal';
@@ -24,9 +25,11 @@ export const NgoPortal: React.FC<{ onNavigate: (view: string, id?: string) => vo
     logVolunteerHours
   } = useData();
   const { currentUser } = useAuth();
+  const { hasFeature } = useSubscription();
 
   const [activeTab, setActiveTab] = useState<'cases' | 'projects' | 'volunteers' | 'reports'>('cases');
   const [showAiModal, setShowAiModal] = useState(false);
+  const [showUpgradeModal, setShowUpgradeModal] = useState(false);
 
   // Selected Case for Review/Triage
   const [selectedCase, setSelectedCase] = useState<HelpRequest | null>(null);
@@ -180,12 +183,23 @@ export const NgoPortal: React.FC<{ onNavigate: (view: string, id?: string) => vo
 
         <div style={{ display: 'flex', gap: '0.75rem' }}>
           <button
-            onClick={() => setShowAiModal(true)}
+            onClick={() => {
+              if (hasFeature('aiCopilot')) {
+                setShowAiModal(true);
+              } else {
+                setShowUpgradeModal(true);
+              }
+            }}
             className="btn btn-secondary"
             style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', borderColor: '#38bdf8', color: '#0369a1' }}
           >
             <Icons.Sparkles size={18} color="#0284c7" />
             <span>AI Operations Copilot</span>
+            {!hasFeature('aiCopilot') && (
+              <span className="badge" style={{ background: '#fef3c7', color: '#92400e', fontSize: '0.625rem', padding: '1px 6px' }}>
+                PRO
+              </span>
+            )}
           </button>
         </div>
       </div>
@@ -940,6 +954,78 @@ export const NgoPortal: React.FC<{ onNavigate: (view: string, id?: string) => vo
 
       {/* AI Assistant Modal */}
       <NgoAssistantModal isOpen={showAiModal} onClose={() => setShowAiModal(false)} />
+
+      {/* Upgrade Prompt Modal for Free Tier */}
+      {showUpgradeModal && (
+        <div
+          style={{
+            position: 'fixed',
+            inset: 0,
+            background: 'var(--modal-overlay)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            zIndex: 1000,
+            padding: '1rem',
+          }}
+        >
+          <div
+            className="card animate-fade"
+            style={{
+              maxWidth: '480px',
+              width: '100%',
+              background: 'var(--modal-bg)',
+              border: '1px solid var(--border)',
+              borderRadius: 'var(--radius-lg)',
+              padding: '2.5rem 2rem',
+              textAlign: 'center',
+              boxShadow: 'var(--shadow-xl)',
+            }}
+          >
+            <div
+              style={{
+                width: '56px',
+                height: '56px',
+                borderRadius: '50%',
+                background: '#eff6ff',
+                color: '#2563eb',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                margin: '0 auto 1.25rem auto',
+              }}
+            >
+              <Icons.Sparkles size={28} />
+            </div>
+            <h3 style={{ fontSize: '1.35rem', fontWeight: 800, color: 'var(--text-main)', marginBottom: '0.5rem' }}>
+              Unlock AI Operations Copilot
+            </h3>
+            <p style={{ fontSize: '0.875rem', color: 'var(--text-muted)', lineHeight: '1.6', marginBottom: '1.75rem' }}>
+              Automated intake triage, natural language urgency classification, and intelligent volunteer resource matching are exclusively available on <strong>NGO Pro</strong> and <strong>NGO Enterprise</strong> tiers.
+            </p>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+              <button
+                onClick={() => {
+                  setShowUpgradeModal(false);
+                  onNavigate('pricing');
+                }}
+                className="btn btn-primary btn-lg"
+                style={{ width: '100%', fontWeight: 700 }}
+              >
+                <span>View Subscription Plans & Upgrade</span>
+                <Icons.ArrowRight size={16} />
+              </button>
+              <button
+                onClick={() => setShowUpgradeModal(false)}
+                className="btn btn-secondary"
+                style={{ width: '100%' }}
+              >
+                Maybe Later
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
