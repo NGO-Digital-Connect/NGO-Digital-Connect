@@ -28,6 +28,34 @@ export interface ToastMessage {
   type: 'INFO' | 'SUCCESS' | 'WARNING' | 'ALERT';
 }
 
+interface DbHelpRequestRow {
+  id: string;
+  status: CaseStatus;
+  [key: string]: unknown;
+}
+
+interface DbDirectMessageRow {
+  id: string;
+  case_id?: string;
+  sender_id: string;
+  receiver_id: string;
+  content: string;
+  timestamp: string;
+  [key: string]: unknown;
+}
+
+interface DbNotificationRow {
+  id: string;
+  user_id: string;
+  title: string;
+  message: string;
+  type: NotificationItem['type'];
+  created_at: string;
+  is_read: boolean;
+  action_url?: string;
+  [key: string]: unknown;
+}
+
 interface DataContextType {
   // Loading & Sync States
   isLoading: boolean;
@@ -206,48 +234,51 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const dataChannel = supabase
       .channel('realtime_platform_stream')
       // Help requests / cases (INSERT, UPDATE, DELETE)
-      .on(
+      .on<DbHelpRequestRow>(
         'postgres_changes',
         { event: '*', schema: 'public', table: 'help_requests' },
-        async (payload: any) => {
-          console.log('[Realtime] help_requests changed:', payload.eventType, payload.new?.id || payload.old?.id);
+        async (payload) => {
+          const newRecord = payload.new as DbHelpRequestRow | undefined;
+          const oldRecord = payload.old as Partial<DbHelpRequestRow> | undefined;
+          console.log('[Realtime] help_requests changed:', payload.eventType, newRecord?.id || oldRecord?.id);
           if (!isMounted) return;
 
           if (payload.eventType === 'INSERT') {
             const freshCases = await SupabaseService.getCases();
             if (isMounted) setCases(freshCases);
-          } else if (payload.eventType === 'UPDATE') {
+          } else if (payload.eventType === 'UPDATE' && newRecord?.id) {
             setCases(prev =>
-              prev.map(c => (c.id === payload.new.id ? { ...c, ...payload.new, status: payload.new.status } : c))
+              prev.map(c => (c.id === newRecord.id ? { ...c, ...newRecord, status: newRecord.status } : c))
             );
             // Refresh with full relational joins in background
             SupabaseService.getCases().then(fc => {
               if (isMounted) setCases(fc);
             });
-          } else if (payload.eventType === 'DELETE') {
-            setCases(prev => prev.filter(c => c.id !== payload.old.id));
+          } else if (payload.eventType === 'DELETE' && oldRecord?.id) {
+            setCases(prev => prev.filter(c => c.id !== oldRecord.id));
           }
         }
       )
       // Direct messages (Instant realtime chat between Beneficiary and NGO)
-      .on(
+      .on<DbDirectMessageRow>(
         'postgres_changes',
         { event: 'INSERT', schema: 'public', table: 'direct_messages' },
-        (payload: any) => {
-          console.log('[Realtime] new direct_message:', payload.new?.id);
-          if (!isMounted || !payload.new) return;
+        (payload) => {
+          const newMsg = payload.new as DbDirectMessageRow | undefined;
+          console.log('[Realtime] new direct_message:', newMsg?.id);
+          if (!isMounted || !newMsg) return;
 
-          const newMsgId = payload.new.id;
+          const newMsgId = newMsg.id;
           const freshMsg: DirectMessage = {
-            id: payload.new.id,
-            caseId: payload.new.case_id,
-            senderId: payload.new.sender_id,
-            senderName: payload.new.sender_id === currentUser.id ? currentUser.profile.name : 'Participant',
-            senderRole: payload.new.sender_id === currentUser.id ? currentUser.role : 'NGO',
-            receiverId: payload.new.receiver_id,
-            receiverName: payload.new.receiver_id === currentUser.id ? currentUser.profile.name : 'Recipient',
-            content: payload.new.content,
-            timestamp: payload.new.timestamp,
+            id: newMsg.id,
+            caseId: newMsg.case_id,
+            senderId: newMsg.sender_id,
+            senderName: newMsg.sender_id === currentUser.id ? currentUser.profile.name : 'Participant',
+            senderRole: newMsg.sender_id === currentUser.id ? currentUser.role : 'NGO',
+            receiverId: newMsg.receiver_id,
+            receiverName: newMsg.receiver_id === currentUser.id ? currentUser.profile.name : 'Recipient',
+            content: newMsg.content,
+            timestamp: newMsg.timestamp,
           };
 
           setMessages(prev => {
@@ -256,7 +287,7 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
           });
 
           // If current user is the receiver, show real-time toast
-          if (payload.new.receiver_id === currentUser.id) {
+          if (newMsg.receiver_id === currentUser.id) {
             triggerToast('New Message Received', freshMsg.content, 'INFO');
           }
 
@@ -267,23 +298,24 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
         }
       )
       // Realtime Notifications
-      .on(
+      .on<DbNotificationRow>(
         'postgres_changes',
         { event: '*', schema: 'public', table: 'notifications' },
-        (payload: any) => {
+        (payload) => {
           if (!isMounted) return;
-          console.log('[Realtime] notification change:', payload.eventType, payload.new?.id);
+          const newNotif = payload.new as DbNotificationRow | undefined;
+          console.log('[Realtime] notification change:', payload.eventType, newNotif?.id);
 
-          if (payload.eventType === 'INSERT' && payload.new) {
+          if (payload.eventType === 'INSERT' && newNotif) {
             const notif: NotificationItem = {
-              id: payload.new.id,
-              userId: payload.new.user_id,
-              title: payload.new.title,
-              message: payload.new.message,
-              type: payload.new.type,
-              createdAt: payload.new.created_at,
-              isRead: payload.new.is_read,
-              actionUrl: payload.new.action_url,
+              id: newNotif.id,
+              userId: newNotif.user_id,
+              title: newNotif.title,
+              message: newNotif.message,
+              type: newNotif.type,
+              createdAt: newNotif.created_at,
+              isRead: newNotif.is_read,
+              actionUrl: newNotif.action_url,
             };
 
             setNotifications(prev => {
@@ -292,12 +324,12 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
             });
 
             // Trigger UI toast for the recipient
-            if (payload.new.user_id === currentUser.id) {
+            if (newNotif.user_id === currentUser.id) {
               triggerToast(notif.title, notif.message, notif.type);
             }
-          } else if (payload.eventType === 'UPDATE' && payload.new) {
+          } else if (payload.eventType === 'UPDATE' && newNotif) {
             setNotifications(prev =>
-              prev.map(n => (n.id === payload.new.id ? { ...n, isRead: payload.new.is_read } : n))
+              prev.map(n => (n.id === newNotif.id ? { ...n, isRead: newNotif.is_read } : n))
             );
           }
         }
@@ -371,7 +403,7 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
       isMounted = false;
       supabase.removeChannel(dataChannel);
     };
-  }, [currentUser.id, triggerToast]);
+  }, [currentUser.id, currentUser.profile.name, currentUser.role, triggerToast]);
 
   // Sync to local cache buffer for fast offline view
   useEffect(() => { StorageService.saveCases(cases); }, [cases]);
@@ -510,9 +542,10 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
         });
 
       return dbRecord;
-    } catch (err: any) {
+    } catch (err) {
       console.error('[DataContext] submitHelpRequest failed:', err);
-      triggerToast('Request Submission Error', err.message || 'Could not save case.', 'ALERT');
+      const errorMessage = err instanceof Error ? err.message : 'Could not save case.';
+      triggerToast('Request Submission Error', errorMessage, 'ALERT');
       throw err;
     } finally {
       setIsSyncing(false);
@@ -864,8 +897,9 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
         );
       }
       return res;
-    } catch (e: any) {
-      return { success: false, message: e.message || 'Application failed.' };
+    } catch (e) {
+      const errorMessage = e instanceof Error ? e.message : 'Application failed.';
+      return { success: false, message: errorMessage };
     } finally {
       setIsSyncing(false);
     }
@@ -1142,9 +1176,10 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
       );
 
       return confirmedMsg;
-    } catch (err: any) {
+    } catch (err) {
       console.error('[DataContext] sendMessage failed:', err);
-      triggerToast('Message Error', err.message || 'Message could not be sent to recipient.', 'ALERT');
+      const errorMessage = err instanceof Error ? err.message : 'Message could not be sent to recipient.';
+      triggerToast('Message Error', errorMessage, 'ALERT');
       throw err;
     } finally {
       setIsSyncing(false);
