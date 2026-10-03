@@ -99,6 +99,9 @@ The application includes pre-configured realistic accounts across all 7 stakehol
 
 ---
 
+## 👥 Demo Link https://ngo-digital-connect.vercel.app
+
+---
 ## 📁 Architecture & File Structure
 
 ```
