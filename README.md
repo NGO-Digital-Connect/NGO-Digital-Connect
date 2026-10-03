@@ -98,8 +98,11 @@ The application includes pre-configured realistic accounts across all 7 stakehol
 | **Platform Admin** | Platform Oversight | `admin@ngodigitalconnect.org` | Chief Compliance, KYC Accreditation & Moderation Lead |
 
 ---
+## 👥 Live Demo
 
-## 👥 Demo Link https://ngo-digital-connect.vercel.app
+🔗 **[ngo-digital-connect.vercel.app](https://ngo-digital-connect.vercel.app)**
+
+🌐 **[Visit Website →](https://ngo-digital-connect.vercel.app)**
 
 ---
 ## 📁 Architecture & File Structure
