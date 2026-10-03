@@ -1,4 +1,5 @@
-import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
+import React, { createContext, useContext, useState, useEffect, useCallback, useRef } from 'react';
+import type { RealtimeChannel } from '@supabase/supabase-js';
 import type { UserAccount, UserRole, UserProfile } from '../types/models';
 import { StorageService } from '../services/storageService';
 import { SupabaseService } from '../services/supabaseService';
@@ -26,6 +27,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [allUsers, setAllUsers] = useState<UserAccount[]>(() => StorageService.getUsers());
+  const allUsersRef = useRef<UserAccount[]>(allUsers);
   const [currentUser, setCurrentUser] = useState<UserAccount>(() => StorageService.getCurrentUser());
   const [isLoadingAuth, setIsLoadingAuth] = useState<boolean>(true);
   const [authError, setAuthError] = useState<string | null>(null);
@@ -106,7 +108,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
             StorageService.saveCurrentUser(freshUser);
           }
         } else if (event === 'SIGNED_OUT') {
-          const fallback = allUsers[0] || SEED_USERS[0];
+          const fallback = allUsersRef.current[0] || SEED_USERS[0];
           setCurrentUser(fallback);
           StorageService.saveCurrentUser(fallback);
         }
@@ -114,7 +116,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     );
 
     // 3. Realtime Profiles Subscription (Detects registrations across browsers)
-    let profilesChannel: any = null;
+    let profilesChannel: RealtimeChannel | null = null;
     if (isSupabaseConfigured) {
       profilesChannel = supabase
         .channel('realtime_profiles_stream')
@@ -125,7 +127,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
             schema: 'public',
             table: 'profiles',
           },
-          async (payload: any) => {
+          async (payload: { eventType: string; new?: { id?: string; email?: string } | null; old?: { id?: string } | null }) => {
             console.log('[AuthContext Realtime] profiles event:', payload.eventType, payload.new?.email);
             if (payload.eventType === 'INSERT' && payload.new?.id) {
               // Fetch full profile with role relations
@@ -145,7 +147,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
                 setRealtimeStatus('LIVE');
               }
             } else if (payload.eventType === 'DELETE' && payload.old?.id) {
-              setAllUsers(prev => prev.filter(u => u.id !== payload.old.id));
+              const oldId = payload.old.id;
+              setAllUsers(prev => prev.filter(u => u.id !== oldId));
             }
           }
         )
@@ -170,6 +173,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   // Sync users to LocalStorage cache buffer (optional offline read cache)
   useEffect(() => {
+    allUsersRef.current = allUsers;
     StorageService.saveUsers(allUsers);
   }, [allUsers]);
 

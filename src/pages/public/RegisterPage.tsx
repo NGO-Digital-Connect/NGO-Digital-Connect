@@ -161,9 +161,10 @@ export const RegisterPage: React.FC<{ onNavigate: (view: string) => void }> = ({
         case 'GOVERNMENT': onNavigate('portal_government'); break;
         default: onNavigate('home');
       }
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error('[RegisterPage] Registration failed:', err);
-      setErrorMessage(err.message || 'Registration could not be completed. Please check your network and credentials.');
+      const message = err instanceof Error ? err.message : 'Registration could not be completed. Please check your network and credentials.';
+      setErrorMessage(message);
     } finally {
       setIsSubmitting(false);
     }

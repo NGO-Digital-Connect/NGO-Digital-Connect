@@ -7,6 +7,7 @@ export const bn: TranslationSchema = {
     projects: 'প্রকল্পসমূহ',
     opportunities: 'স্বেচ্ছাসেবক',
     impact: 'প্রভাব উপাত্ত',
+    pricing: 'মূল্যতালিকা',
     notifications: 'বিজ্ঞপ্তি',
     noNotifications: 'কোনো নতুন বিজ্ঞপ্তি নেই',
     switchRole: 'রোল পরিবর্তন / নিবন্ধন',

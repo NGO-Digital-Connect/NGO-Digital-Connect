@@ -16,23 +16,25 @@ import { SubscriptionController } from './controllers/subscriptionController.js'
 import { webhookLimiter } from './middleware/rateLimit.js';
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = Number(process.env.PORT) || 5000;
 const FRONTEND_URL = process.env.FRONTEND_URL || 'http://localhost:5173';
 
 // 1. CORS Configuration
 app.use(
   cors({
-    origin: (origin, callback) => {
+    origin: (origin: string | undefined, callback: (err: Error | null, allow?: boolean) => void) => {
       // Allow requests with no origin (like mobile apps, curl, server-to-server)
       if (!origin) return callback(null, true);
       if (
         origin === FRONTEND_URL ||
+        origin === 'http://localhost:5173' ||
+        origin === 'http://localhost:3000' ||
         /^http:\/\/localhost:\d+$/.test(origin) ||
         /^http:\/\/127\.0\.0\.1:\d+$/.test(origin)
       ) {
         return callback(null, true);
       }
-      callback(new Error('Not allowed by CORS'));
+      callback(null, false);
     },
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
@@ -56,8 +58,21 @@ app.use(express.urlencoded({ extended: true }));
 // 4. API Routes
 app.use('/api/subscriptions', subscriptionRouter);
 
-// Health check endpoint
-app.get('/api/health', (_req, res) => {
+// Direct Pricing endpoints & aliases
+app.get('/api/pricing', SubscriptionController.getAvailablePlans);
+app.get('/api/plans', SubscriptionController.getAvailablePlans);
+
+// Health check and root endpoints
+app.get('/', (_req: express.Request, res: express.Response) => {
+  res.json({
+    status: 'ok',
+    service: 'NGO Digital Connect - Subscription API',
+    version: '1.0.0',
+    timestamp: new Date().toISOString(),
+  });
+});
+
+app.get('/api/health', (_req: express.Request, res: express.Response) => {
   res.json({
     status: 'ok',
     service: 'NGO Digital Connect - Subscription API',
@@ -66,21 +81,40 @@ app.get('/api/health', (_req, res) => {
 });
 
 // 404 Handler for unknown routes
-app.use('/api/*', (_req, res) => {
+app.use((_req: express.Request, res: express.Response) => {
   res.status(404).json({ error: 'Endpoint not found' });
 });
 
 // Global Error Handler
-app.use((err: any, _req: express.Request, res: express.Response, _next: express.NextFunction) => {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const globalErrorHandler: express.ErrorRequestHandler = (err, _req, res, _next) => {
   console.error('[Unhandled Server Error]:', err);
-  res.status(500).json({ error: 'Internal server error' });
-});
+  const message = err instanceof Error ? err.message : 'Internal server error';
+  res.status(500).json({ error: message });
+};
+app.use(globalErrorHandler);
 
-app.listen(PORT, () => {
-  console.log(`=======================================================`);
-  console.log(`🚀 NGO Digital Connect API server running on port ${PORT}`);
-  console.log(`🌐 Base URL: http://localhost:${PORT}`);
-  console.log(`⚡ Subscriptions: http://localhost:${PORT}/api/subscriptions/plans`);
-  console.log(`💳 Webhook Endpoint: http://localhost:${PORT}/api/subscriptions/webhook`);
-  console.log(`=======================================================`);
-});
+const startServer = (port: number) => {
+  const server = app.listen(port, () => {
+    console.log(`=======================================================`);
+    console.log(`🚀 NGO Digital Connect API server running on port ${port}`);
+    console.log(`🌐 Base URL: http://localhost:${port}`);
+    console.log(`⚡ Subscriptions: http://localhost:${port}/api/subscriptions/plans`);
+    console.log(`💳 Webhook Endpoint: http://localhost:${port}/api/subscriptions/webhook`);
+    console.log(`=======================================================`);
+  });
+
+  server.on('error', (err: NodeJS.ErrnoException) => {
+    if (err.code === 'EADDRINUSE') {
+      const nextPort = port + 1;
+      console.warn(`[Server] Port ${port} is in use (e.g. macOS AirPlay). Retrying on port ${nextPort}...`);
+      startServer(nextPort);
+    } else {
+      console.error('[Server Error]:', err);
+    }
+  });
+
+  return server;
+};
+
+startServer(PORT);

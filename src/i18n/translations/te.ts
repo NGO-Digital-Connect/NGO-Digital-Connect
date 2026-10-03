@@ -7,6 +7,7 @@ export const te: TranslationSchema = {
     projects: 'ప్రాజెక్టులు',
     opportunities: 'స్వచ్ఛంద సేవ',
     impact: 'ప్రభావ సమాచారం',
+    pricing: 'ధరల వివరాలు',
     notifications: 'నోటిఫికేషన్లు',
     noNotifications: 'కొత్త నోటిఫికేషన్లు లేవు',
     switchRole: 'పాత్ర మార్చు / నమోదు',

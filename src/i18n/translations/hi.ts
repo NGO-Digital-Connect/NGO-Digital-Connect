@@ -7,6 +7,7 @@ export const hi: TranslationSchema = {
     projects: 'परियोजनाएं',
     opportunities: 'स्वयंसेवक',
     impact: 'प्रभाव डेटा',
+    pricing: 'मूल्य निर्धारण',
     notifications: 'सूचनाएं',
     noNotifications: 'कोई नई सूचना नहीं',
     switchRole: 'भूमिका बदलें / पंजीकरण',

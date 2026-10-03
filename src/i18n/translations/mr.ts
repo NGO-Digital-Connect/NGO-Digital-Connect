@@ -7,6 +7,7 @@ export const mr: TranslationSchema = {
     projects: 'प्रकल्प',
     opportunities: 'स्वयंसेवक',
     impact: 'प्रभाव डेटा',
+    pricing: 'दर व योजना',
     notifications: 'सूचना',
     noNotifications: 'कोणतीही नवीन सूचना नाही',
     switchRole: 'भूमिका बदला / नोंदणी',

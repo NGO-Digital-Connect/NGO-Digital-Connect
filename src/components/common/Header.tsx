@@ -47,12 +47,12 @@ export const Header: React.FC<HeaderProps> = ({ currentView, onNavigate }) => {
   };
 
   const navItems = [
-    { id: 'home', labelKey: 'nav.home' },
-    { id: 'ngos', labelKey: 'nav.ngos' },
-    { id: 'projects', labelKey: 'nav.projects' },
-    { id: 'opportunities', labelKey: 'nav.opportunities' },
-    { id: 'impact', labelKey: 'nav.impact' },
-    { id: 'pricing', labelKey: 'nav.pricing' },
+    { id: 'home', labelKey: 'nav.home', defaultLabel: 'Home' },
+    { id: 'ngos', labelKey: 'nav.ngos', defaultLabel: 'Verified NGOs' },
+    { id: 'projects', labelKey: 'nav.projects', defaultLabel: 'Projects' },
+    { id: 'opportunities', labelKey: 'nav.opportunities', defaultLabel: 'Volunteer' },
+    { id: 'impact', labelKey: 'nav.impact', defaultLabel: 'Impact Data' },
+    { id: 'pricing', labelKey: 'nav.pricing', defaultLabel: 'Pricing' },
   ];
 
   return (
@@ -136,7 +136,7 @@ export const Header: React.FC<HeaderProps> = ({ currentView, onNavigate }) => {
                 transition: 'color 0.15s ease'
               }}
             >
-              {t(item.labelKey, item.id)}
+              {t(item.labelKey, item.defaultLabel)}
             </button>
           ))}
         </nav>
@@ -319,7 +319,7 @@ export const Header: React.FC<HeaderProps> = ({ currentView, onNavigate }) => {
                 cursor: 'pointer'
               }}
             >
-              {t(item.labelKey, item.id)}
+              {t(item.labelKey, item.defaultLabel)}
             </button>
           ))}
         </div>

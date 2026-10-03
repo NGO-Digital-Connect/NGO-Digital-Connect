@@ -1,80 +1,157 @@
-# NGO-Digital-Connect
+<div align="center">
+
+# 🤝 NGO Digital Connect
+
 ### An Integrated, Traceable Platform for the Social Impact Ecosystem
 
-**NGO Digital Connect** unites beneficiaries in need, accredited non-profits, volunteers, individual donors, CSR institutions, and government monitoring agencies into a single verifiable lifecycle:
+**`NEED`** &nbsp;➜&nbsp; **`ACTION`** &nbsp;➜&nbsp; **`IMPACT`**
 
-$$\textbf{NEED} \longrightarrow \textbf{ACTION} \longrightarrow \textbf{IMPACT}$$
+<br/>
 
----
+[![Live Demo](https://img.shields.io/badge/🌐_Live_Demo-ngo--digital--connect.vercel.app-2ea44f?style=for-the-badge)](https://ngo-digital-connect.vercel.app)
 
-## 🌟 Key Product Capabilities
+![React](https://img.shields.io/badge/React-18-61DAFB?style=flat-square&logo=react&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-Strict-3178C6?style=flat-square&logo=typescript&logoColor=white)
+![Vite](https://img.shields.io/badge/Vite-Dev_Server-646CFF?style=flat-square&logo=vite&logoColor=white)
+![Node](https://img.shields.io/badge/Node-18%2B%20%7C%2020%2B-339933?style=flat-square&logo=node.js&logoColor=white)
+![Status](https://img.shields.io/badge/Status-Demo_Platform-orange?style=flat-square)
+![Roles](https://img.shields.io/badge/Stakeholder_Roles-8-blueviolet?style=flat-square)
 
-1. **Public Discovery Surface**
-   - **Ecosystem Home**: Visualizes the Need $\rightarrow$ Action $\rightarrow$ Impact journey, live calculated metrics, and featured initiatives.
-   - **Verified NGO Directory**: Faceted filtering by cause focus, operating state, and 12A/80G accreditation badges.
-   - **Multi-Metric Project Catalog**: Tracks capital raised, volunteer enrollment, and direct beneficiaries reached in real-time.
-   - **Volunteer Opportunities Hub**: Real-time capacity-capped volunteer slot discovery with direct one-click application.
-   - **Global Impact Ledger**: Calculated ecosystem outcomes computed dynamically from live database records.
+<br/>
 
-2. **Beneficiary Intake & Protection (Strict PII Privacy)**
-   - **AI-Assisted Natural Language Intake**: Automatically infers cause category, support type, and urgency level from citizen descriptions.
-   - **Status-Driven Tracker**: Step-by-step progress tracking (*Submitted $\rightarrow$ Under Review $\rightarrow$ Verified $\rightarrow$ Matched $\rightarrow$ Accepted $\rightarrow$ In Progress $\rightarrow$ Resolved*).
-   - **Caseworker Channel**: Private, scoped communication between beneficiary and assigned NGO caseworker.
-   - **Zero Public PII**: Contact numbers, street addresses, and medical certificates remain strictly confidential.
+*Beneficiaries in need · Accredited non-profits · Volunteers · Individual donors · CSR institutions · Government monitoring agencies — united in a single, verifiable lifecycle.*
 
-3. **NGO Operations Hub**
-   - **Triage Inbox**: Review incoming help requests filtered by critical priority and geographic proximity.
-   - **Project Builder & Milestones**: Deploy multi-metric social initiatives with verifiable field milestones.
-   - **Audited Expense Utilization Ledger**: Itemize expenditures against remaining project balances with vendor references.
-   - **Volunteer Coordination Desk**: Accept/decline volunteer applications without over-allocation and log verified service hours.
-   - **AI Operations Copilot**: Instant natural language queries for underfunded projects, unaddressed urgent cases, and volunteer capacities.
-   - **Statutory Impact Dossier Generator**: One-click printable executive impact reports for institutional partners.
+<br/>
 
-4. **Volunteer Mobilization Engine**
-   - Profile indexing for verified skills and availability.
-   - Smart AI matching scoring openings against volunteer competencies.
-   - Track accepted assignments, attendance, and accredited service hours.
+[**Overview**](#-overview) •
+[**Features**](#-key-product-capabilities) •
+[**Quick Start**](#-quick-start) •
+[**Demo Personas**](#-demo-personas) •
+[**Architecture**](#-architecture--file-structure) •
+[**Security**](#-security--privacy-guarantees) •
+[**AI**](#-ai-powered-features)
 
-5. **Philanthropic Donor Suite**
-   - Project discovery by cause and geography.
-   - Interactive contribution checkout with real-time project wallet allocation.
-   - **Certified Section 80G Tax Receipts Vault**: Instantly generate and print tax-deductible certificates.
-   - Itemized fund utilization visibility.
-
-6. **Institutional CSR Suite (MCA Section 135 Compliant)**
-   - Schedule VII statutory cause filters.
-   - Multi-lakh grant commitments tied directly to active field projects.
-   - Audited expenditure tables for corporate social responsibility filings.
-
-7. **Government & Institutional Monitoring Suite**
-   - Macro-level district social density analytics across major Indian states.
-   - Welfare non-duplication check: cross-referencing regional needs to avoid double allocation of public welfare.
-   - Accredited non-profit roster in regional jurisdiction.
-
-8. **Platform Trust & Administration Suite**
-   - **NGO KYC Accreditation Desk**: Review pending non-profit registrations, inspect 12A/80G and CSR-1 numbers, and grant the Verified Trust Badge.
-   - **Content Moderation & Dispute Desk**: Investigate community complaints and enforce community standards.
-   - **Immutable Audit Trail Explorer**: Searchable, append-only chronological log of all platform operations.
+</div>
 
 ---
 
-## 🚀 Running the Application
+## 🌟 Overview
 
-### 1. Prerequisites
-- **Node.js**: v18+ or v20+
-- **npm** or **pnpm**
+NGO Digital Connect creates a **transparent digital ecosystem** where every rupee, every volunteer hour, and every case can be traced from the moment a need is raised to the moment impact is verified.
 
-### 2. Development Server
-Clone or navigate to the project directory and run:
+```mermaid
+flowchart LR
+    A["🆘 NEED<br/><sub>Beneficiary Intake</sub>"] --> B["⚡ ACTION<br/><sub>NGOs · Volunteers<br/>Donors · CSR</sub>"]
+    B --> C["🌱 IMPACT<br/><sub>Milestones · Service Hours<br/>Fund Utilization · Audit Trail</sub>"]
+    style A fill:#fee2e2,stroke:#dc2626,stroke-width:2px,color:#111
+    style B fill:#fef3c7,stroke:#d97706,stroke-width:2px,color:#111
+    style C fill:#dcfce7,stroke:#16a34a,stroke-width:2px,color:#111
+```
+
+---
+
+## 🚀 Key Product Capabilities
+
+### 🌍 1. Public Discovery Surface
+
+| Feature | Description |
+|---|---|
+| 🏠 **Ecosystem Home** | Visualizes the Need → Action → Impact journey with live metrics and featured initiatives |
+| ✅ **Verified NGO Directory** | Faceted filtering by cause focus, operating state, and 12A / 80G accreditation badges |
+| 📂 **Multi-Metric Project Catalog** | Real-time tracking of capital raised, volunteer enrollment, and beneficiaries reached |
+| 🙋 **Volunteer Opportunities Hub** | Capacity-capped slot discovery with one-click application |
+| 📒 **Global Impact Ledger** | Ecosystem outcomes computed dynamically from live database records |
+
+### 🧑‍🤝‍🧑 2. Beneficiary Intake & Protection
+
+| Feature | Description |
+|---|---|
+| 🧠 **AI-Assisted Natural Language Intake** | Infers cause category, support type, and urgency from plain-language descriptions |
+| 📍 **Status-Driven Tracker** | Transparent step-by-step case progress (see below) |
+| 💬 **Caseworker Channel** | Private, scoped communication with assigned NGO caseworkers |
+| 🔒 **Zero Public PII** | Phone numbers, street addresses, and medical certificates stay strictly confidential |
+
+```mermaid
+flowchart LR
+    S1[Submitted] --> S2[Under Review] --> S3[Verified] --> S4[Matched] --> S5[Accepted] --> S6[In Progress] --> S7([Resolved])
+    style S1 fill:#e0f2fe,stroke:#0284c7,color:#111
+    style S2 fill:#e0f2fe,stroke:#0284c7,color:#111
+    style S3 fill:#e0f2fe,stroke:#0284c7,color:#111
+    style S4 fill:#fef9c3,stroke:#ca8a04,color:#111
+    style S5 fill:#fef9c3,stroke:#ca8a04,color:#111
+    style S6 fill:#ffedd5,stroke:#ea580c,color:#111
+    style S7 fill:#dcfce7,stroke:#16a34a,color:#111
+```
+
+### 🏢 3. NGO Operations Hub
+
+| Feature | Description |
+|---|---|
+| 📥 **Triage Inbox** | Review incoming requests filtered by critical priority and geographic proximity |
+| 🏗️ **Project Builder & Milestones** | Launch multi-metric initiatives with verifiable field milestones |
+| 🧾 **Audited Expense Ledger** | Itemize spend against remaining project balance, with vendor references |
+| 🗂️ **Volunteer Coordination Desk** | Accept or decline applications without over-allocation; log verified service hours |
+| 🤖 **AI Operations Copilot** | Natural-language queries for underfunded projects, urgent cases, and volunteer capacity |
+| 📄 **Statutory Impact Dossier Generator** | One-click printable executive impact reports for institutional partners |
+
+### 🙌 4. Volunteer Mobilization Engine
+
+- 🎯 Profile indexing for verified skills and availability
+- ✨ Smart AI matching that scores opportunities against volunteer competencies
+- ⏱️ Tracking of accepted assignments, attendance, and accredited service hours
+
+### 💝 5. Philanthropic Donor Suite
+
+- 🔎 Project discovery by cause and geography
+- 💳 Interactive contribution checkout with project-level fund allocation
+- 🧾 **80G Tax Receipt Vault** — generate and print tax-deductible certificates
+- 📊 Itemized fund utilization visibility
+- 🕑 Donation and contribution history
+
+### 🏛️ 6. Institutional CSR Suite
+
+- 📚 Schedule VII statutory cause filters
+- 🤝 Grant commitments tied directly to active field projects
+- 🧮 Audited expenditure tables for CSR reporting
+- 📈 Project-level CSR impact tracking
+
+### 🗺️ 7. Government & Institutional Monitoring Suite
+
+- 📊 Macro-level district social-density analytics across major Indian states
+- 🔁 Welfare non-duplication checks to surface overlapping regional needs
+- 🏅 Accredited non-profit roster organized by regional jurisdiction
+- 📍 District-level project and beneficiary visibility
+
+### 🛡️ 8. Platform Trust & Administration Suite
+
+- 🪪 **NGO KYC Accreditation Desk** — review pending registrations, inspect 12A / 80G / CSR-1 details, grant the Verified Trust Badge
+- ⚖️ **Content Moderation & Dispute Desk** — investigate community complaints and enforce standards
+- 🔗 **Immutable Audit Trail Explorer** — searchable, chronological log of platform operations
+
+---
+
+## ⚡ Quick Start
+
+### Prerequisites
+
+| Requirement | Version |
+|---|---|
+| Node.js | `v18+` or `v20+` |
+| Package manager | `npm` or `pnpm` |
+
+### Run the development server
 
 ```bash
+# Clone the repository and move into the project directory
+npm install
 npm run dev
 ```
 
-Open your browser at `http://localhost:5173` to explore the application.
+Then open **<http://localhost:5173>** in your browser.
 
-### 3. Production Build
-Verify TypeScript type checks and produce minified production bundles:
+### Build for production
+
+Verifies TypeScript compilation and generates optimized bundles:
 
 ```bash
 npm run build
@@ -82,229 +159,198 @@ npm run build
 
 ---
 
-## 👥 Demo Personas (1-Click Switcher Available in Top Bar)
+## 🎭 Demo Personas
 
-The application includes pre-configured realistic accounts across all 7 stakeholder roles. You can instantly switch between them using the top-bar demo switcher or sign in using their registered email:
+Pre-configured demo accounts cover every major stakeholder role. Switch instantly using the **top-bar demo switcher**, or sign in with a registered email.
 
-| Stakeholder Role | Persona Name | Registered Email | Focus / Context |
+| Role | Persona | Email | Context |
 |---|---|---|---|
-| **Beneficiary** | Rajesh Mondal | `rajesh.mondal@example.com` | Daily wage artisan seeking urgent pediatric heart surgery support |
-| **NGO Director** | Dr. Ananya Sen | `contact@preronamission.org` | Prerona Relief Mission (Sundarbans Healthcare & Disaster Relief) |
-| **NGO Director** | Priya Sharma | `director@vidyajyoti.org` | Vidya Jyoti Foundation (Solar Smart Classrooms in Mumbai Slums) |
-| **Volunteer** | Arjun Mehta | `arjun.mehta@example.com` | Weekend STEM educator & field triage volunteer |
-| **Donor** | Kavita Deshmukh | `kavita.deshmukh@example.com` | Tech entrepreneur funding child healthcare & digital literacy |
-| **CSR Lead** | Vikramaditya Oberoi | `csr@tatanetworks.com` | Tata Networks CSR Foundation (Schedule VII Grant Allocations) |
-| **Government Nodal** | Debashis Mukherjee, IAS | `dm.kolkata@wb.gov.in` | Department of Social Welfare & Disaster Management |
-| **Platform Admin** | Platform Oversight | `admin@ngodigitalconnect.org` | Chief Compliance, KYC Accreditation & Moderation Lead |
+| 🧑 **Beneficiary** | Rajesh Mondal | `rajesh.mondal@example.com` | Daily wage artisan seeking urgent pediatric heart surgery support |
+| 🏢 **NGO Director** | Dr. Ananya Sen | `contact@preronamission.org` | *Prerona Relief Mission* — Sundarbans healthcare & disaster relief |
+| 🏢 **NGO Director** | Priya Sharma | `director@vidyajyoti.org` | *Vidya Jyoti Foundation* — solar smart classrooms |
+| 🙋 **Volunteer** | Arjun Mehta | `arjun.mehta@example.com` | Weekend STEM educator & field triage volunteer |
+| 💝 **Donor** | Kavita Deshmukh | `kavita.deshmukh@example.com` | Tech entrepreneur supporting child healthcare & digital literacy |
+| 🏛️ **CSR Lead** | Vikramaditya Oberoi | `csr@tatanetworks.com` | *Tata Networks CSR Foundation* — Schedule VII grant allocations |
+| 🗺️ **Government Nodal** | Debashis Mukherjee, IAS | `dm.kolkata@wb.gov.in` | Dept. of Social Welfare & Disaster Management |
+| 🛡️ **Platform Admin** | Platform Oversight | `admin@ngodigitalconnect.org` | Compliance, KYC accreditation & moderation |
+
+> 🔗 **Try it live:** [ngo-digital-connect.vercel.app](https://ngo-digital-connect.vercel.app)
+
+---
+
+## 🛡️ Role-Based Access
+
+| Role | Primary Capabilities |
+|---|---|
+| 🧑 **Beneficiary** | Submit cases, track requests, communicate with assigned caseworkers |
+| 🏢 **NGO** | Manage cases, projects, volunteers, expenses, and impact |
+| 🙋 **Volunteer** | Discover opportunities, apply, track assignments and service hours |
+| 💝 **Donor** | Discover projects, contribute, track impact and receipts |
+| 🏛️ **CSR** | Review projects, manage grants, monitor CSR impact |
+| 🗺️ **Government** | Monitor regional needs, projects, and institutional coverage |
+| 🛡️ **Admin** | Manage accreditation, moderation, compliance, and audit records |
 
 ---
 
 ## 📁 Architecture & File Structure
 
-```
+<details>
+<summary><b>Click to expand the full project tree</b></summary>
+
+<br/>
+
+```text
 src/
 ├── types/
-│   └── models.ts             # Complete TypeScript domain schemas, lifecycles, and DTOs
+│   └── models.ts            # TypeScript domain schemas, lifecycles & DTOs
+│
 ├── data/
-│   ├── seedData.ts           # Populated multi-tenant demonstration records
-│   └── causes.ts             # Causes taxonomy, Indian states/cities, and skill tags
+│   ├── seedData.ts          # Multi-tenant demonstration records
+│   └── causes.ts            # Cause taxonomy, Indian states/cities, skill tags
+│
 ├── store/
-│   ├── AuthContext.tsx       # Authentication session, fast role switching, and RBAC
-│   └── DataContext.tsx       # Central state machine, relational persistence, and audit logging
+│   ├── AuthContext.tsx      # Auth session, role switching & RBAC
+│   └── DataContext.tsx      # Central state, relational persistence & audit logging
+│
 ├── services/
-│   ├── aiService.ts          # NLP intake classification, smart matching, and NGO copilot
-│   └── storageService.ts     # LocalStorage / Mock DB persistence engine
+│   ├── aiService.ts         # NLP intake classification, smart matching & NGO copilot
+│   └── storageService.ts    # Application persistence layer
+│
 ├── components/
 │   ├── common/
-│   │   ├── Icons.tsx         # Comprehensive Lucide-style SVG icon set
-│   │   ├── Header.tsx        # Navigation, persona switcher bar, and live notification drawer
-│   │   ├── Footer.tsx        # Transparency footer, privacy guarantee, and seed reset button
-│   │   ├── Badge.tsx         # Universal status and urgency badge component
-│   │   └── ProgressBar.tsx   # Multi-metric visualizer (funds, volunteers, beneficiaries)
+│   │   ├── Icons.tsx        # Comprehensive SVG icon set
+│   │   ├── Header.tsx       # Navigation, persona switcher & notification drawer
+│   │   ├── Footer.tsx       # Transparency footer & privacy information
+│   │   ├── Badge.tsx        # Universal status & urgency badge
+│   │   └── ProgressBar.tsx  # Multi-metric visualizer
 │   └── ai/
-│       └── NgoAssistantModal.tsx # Interactive AI Copilot for NGO operations
+│       └── NgoAssistantModal.tsx   # Interactive AI Copilot
+│
 ├── pages/
 │   ├── public/
-│   │   ├── HomePage.tsx      # Landing page, core journey visualizer, and dynamic statistics
-│   │   ├── NgoDirectoryPage.tsx # Verified directory with faceted search and compliance filters
-│   │   ├── NgoDetailPage.tsx # Public NGO dossier, statutory accreditations, and active initiatives
-│   │   ├── ProjectDirectoryPage.tsx # Project catalog with multi-metric balance scorecards
-│   │   ├── ProjectDetailPage.tsx # Deep dive with audited utilization ledger and 80G donation modal
-│   │   ├── OpportunitiesPage.tsx # Capacity-enforced volunteer opportunities and one-click apply
-│   │   ├── ImpactPage.tsx    # Calculated ecosystem metrics and real-time public audit ledger
-│   │   ├── LoginPage.tsx     # Unified login with 1-click persona launcher
-│   │   └── RegisterPage.tsx  # "Who are you?" interactive 6-role onboarding questionnaire
+│   │   ├── HomePage.tsx             # Landing page & dynamic statistics
+│   │   ├── NgoDirectoryPage.tsx     # Verified NGO directory
+│   │   ├── NgoDetailPage.tsx        # Public NGO profile & initiatives
+│   │   ├── ProjectDirectoryPage.tsx # Project catalog
+│   │   ├── ProjectDetailPage.tsx    # Project details & contribution interface
+│   │   ├── OpportunitiesPage.tsx    # Volunteer opportunities
+│   │   ├── ImpactPage.tsx           # Ecosystem metrics & public audit ledger
+│   │   ├── LoginPage.tsx            # Unified login & persona launcher
+│   │   └── RegisterPage.tsx         # Multi-role onboarding
+│   │
 │   └── portals/
-│       ├── BeneficiaryPortal.tsx # Case intake wizard, live stage tracker, and caseworker channel
-│       ├── NgoPortal.tsx     # Inbound triage desk, project builder, expense logger, and volunteer desk
-│       ├── VolunteerPortal.tsx # Roster, applied assignments, and AI-recommended opportunities
-│       ├── DonorPortal.tsx   # 80G tax receipt vault, portfolio tracker, and milestone updates
-│       ├── CsrPortal.tsx     # Schedule VII compliance grant manager and corporate audit feed
-│       ├── GovernmentPortal.tsx # Regional density heatmap, district coverage, and non-duplication review
-│       └── AdminPortal.tsx   # NGO KYC accreditation, moderation desk, and platform audit explorer
-├── App.tsx                   # Master router connecting all public pages and role portals
-└── index.css                 # Clean, responsive CSS design system
+│       ├── BeneficiaryPortal.tsx    # Case intake, tracking & caseworker channel
+│       ├── NgoPortal.tsx            # Triage, projects, expenses & volunteers
+│       ├── VolunteerPortal.tsx      # Assignments & recommended opportunities
+│       ├── DonorPortal.tsx          # Contribution history, receipts & milestones
+│       ├── CsrPortal.tsx            # CSR grant management & reporting
+│       ├── GovernmentPortal.tsx     # Regional analytics & welfare monitoring
+│       └── AdminPortal.tsx          # KYC, moderation & audit management
+│
+├── App.tsx                  # Master router: public pages + portals
+└── index.css                # Responsive CSS design system
 ```
+
+</details>
 
 ---
 
 ## 🔒 Security & Privacy Guarantees
 
-1. **Beneficiary Seclusion (Rule 101)**: Sensitive personal information (private residential address, contact number, personal medical diagnosis PDFs) is strictly hidden from guest visitors, donors, volunteers, and institutional visitors. Only the assigned verified NGO case officer has decrypted access.
-2. **Deterministic Volunteer Capacity (Rule 102)**: No opportunity can accept more volunteers than its defined quota. The UI dynamically locks once slots are filled.
-3. **No Unanchored Capital (Rule 103)**: Every financial contribution must link to an active `ProjectID` with a defined funding goal. Slush funds are strictly prohibited.
-4. **Itemized Fund Utilization (Rule 104)**: NGOs can only record funds as utilized when accompanied by an expenditure category, vendor name, amount, and invoice reference.
-5. **Immutable Audit Trajectory (Rule 105)**: Every critical transition across cases, donations, and accreditation status writes to an append-only audit log.
+| Rule | Principle | What it means |
+|:---:|---|---|
+| **101** | 🔐 **Beneficiary Seclusion** | Private addresses, contact numbers, and medical documents are hidden from public visitors, donors, volunteers, and institutional users. Access follows role-based controls. |
+| **102** | 🎟️ **Deterministic Volunteer Capacity** | No opportunity can accept more volunteers than its capacity. The UI locks applications once slots are filled. |
+| **103** | 🎯 **Project-Linked Contributions** | Contributions are tied to active projects with defined funding goals, never to unassigned platform funds. |
+| **104** | 🧾 **Itemized Fund Utilization** | NGOs record spend by category, vendor name, amount, and invoice reference. |
+| **105** | 🔗 **Audit Trajectory** | Case transitions, contribution records, and accreditation changes are written to the audit trail. |
 
 ---
 
-## 💳 Paid Subscriptions System (Razorpay Subscriptions & Supabase)
+## 💳 Contribution & Payment Interface
 
-NGO Digital Connect features an authoritative, multi-tier subscription platform powered by **Razorpay Subscriptions (Autopay)** with **Supabase PostgreSQL** as the immutable source of truth.
+Donors can:
 
-### Architecture & Verification Flow
+- ✅ Browse active social-impact projects
+- ✅ Review project funding progress
+- ✅ Select a contribution amount and review it before submission
+- ✅ Associate contributions with specific projects
+- ✅ View contribution history and receipt information
 
-```
-User (React + TS)
-       │  1. Selects Plan & clicks "Upgrade"
-       ▼
-Node.js Express Backend (/api/subscriptions/create)
-       │  2. Authenticates JWT with Supabase Auth
-       │  3. Creates Subscription on Razorpay API
-       │  4. Inserts pending row (status: 'created') in PostgreSQL
-       ▼
-Frontend opens Razorpay Checkout (checkout.js)
-       │  5. User inputs test card details & authenticates mandate
-       ▼
-Frontend enters "Processing payment..." verification state
-       │  (Frontend NEVER assumes success; polls /api/subscriptions/me
-       │   and listens to Supabase Realtime changes)
-       ▼
-Razorpay Webhook Delivery
-       │  6. Delivers cryptographically signed webhook to Node.js backend
-       ▼
-Node.js Express Backend (/api/subscriptions/webhook)
-       │  7. Verifies X-Razorpay-Signature using HMAC SHA-256 (timing-safe)
-       │  8. Idempotency check against payment_events table
-       │  9. Maps event to authoritative status ('active', 'cancelled', etc.)
-       │ 10. Updates subscriptions row with cycle dates (start_date / end_date)
-       ▼
-Supabase Realtime / Polling
-       │ 11. Subscription status 'active' pushed to client React app
-       ▼
-User unlocked with Premium Access (AI Operations Copilot, Analytics, CSR)
-```
+> [!NOTE]
+> The current application ships the **payment and contribution user interface** as part of the donor experience. Payment-provider backend integrations, recurring subscription infrastructure, payment webhooks, and external payment dashboards are **not** part of the current architecture.
 
 ---
 
-### Subscription Tiers
+## 🧠 AI-Powered Features
 
-| Tier | Price (INR) | Key Capabilities | Limits | Razorpay Plan ID Env |
-|---|---|---|---|---|
-| **Free Starter** | ₹0 / mo | Verified profile, standard triage, volunteer drives | 15 cases/mo, 3 projects, 20 vols | *(Default - No payment)* |
-| **NGO Pro** | ₹1,499 / mo | **AI Operations Copilot**, real-time impact analytics, priority support | 150 cases/mo, 25 projects, 150 vols | `RAZORPAY_PLAN_ID_PRO` |
-| **NGO Enterprise** | ₹4,999 / mo | **Institutional CSR grant workspace**, Schedule VII compliance dossiers | Unlimited cases, projects, volunteers | `RAZORPAY_PLAN_ID_ENTERPRISE` |
+| Feature | What it does |
+|---|---|
+| 🩺 **Beneficiary Intake Classification** | Identifies likely cause category and support type; estimates urgency from submitted descriptions |
+| 🧩 **Volunteer Matching** | Compares skills and availability with opportunity requirements and recommends the best fits |
+| 🤖 **NGO Operations Copilot** | Surfaces underfunded projects, unresolved urgent cases, and volunteer-capacity insights through natural-language queries |
 
----
-
-### Step-by-Step Setup Guide
-
-#### 1. Configure Supabase PostgreSQL Migration
-Execute the migration script in your Supabase SQL editor:
-```bash
-supabase/migrations/20261003_subscriptions_razorpay.sql
-```
-This script provisions:
-- `subscriptions` table with strict Row Level Security (RLS) allowing users to `SELECT` only their own row.
-- `payment_events` table for webhook audit trails and idempotent deduplication.
-- Database trigger `on_auth_user_created_subscription` that automatically gives every newly registered user a Free active subscription.
-- Performance indexes on `user_id`, `razorpay_subscription_id`, and `razorpay_event_id`.
-
-#### 2. Create Plans in the Razorpay Dashboard (Test Mode)
-1. Sign in to your [Razorpay Dashboard](https://dashboard.razorpay.com/) and toggle into **Test Mode**.
-2. Navigate to **Subscriptions** $\rightarrow$ **Plans** $\rightarrow$ **Create Plan**.
-3. **Plan 1: NGO Pro**
-   - **Plan Name:** `NGO Pro Monthly`
-   - **Description:** `AI operations copilot, advanced analytics, and high-capacity triage`
-   - **Billing Frequency:** `Monthly` (Repeat every `1` Month)
-   - **Billing Amount:** `₹1,499.00`
-   - Click **Save Plan** and copy the generated Plan ID (e.g., `plan_N3eF9xLxxxxxxxx`).
-4. **Plan 2: NGO Enterprise**
-   - **Plan Name:** `NGO Enterprise Monthly`
-   - **Description:** `Institutional CSR workspace, Schedule VII dossiers, unlimited scale`
-   - **Billing Frequency:** `Monthly` (Repeat every `1` Month)
-   - **Billing Amount:** `₹4,999.00`
-   - Click **Save Plan** and copy the generated Plan ID (e.g., `plan_P8aM2yZyyyyyyyy`).
-
-#### 3. Set Up API Keys & Environment Variables
-Copy `.env.example` to `.env`:
-```bash
-cp .env.example .env
-```
-Fill in your credentials:
-```ini
-# Frontend
-VITE_SUPABASE_URL=https://your-project.supabase.co
-VITE_SUPABASE_ANON_KEY=your-supabase-anon-key
-VITE_API_BASE_URL=http://localhost:5000/api
-VITE_RAZORPAY_KEY_ID=rzp_test_your_razorpay_key_id
-
-# Backend (Server)
-PORT=5000
-FRONTEND_URL=http://localhost:5173
-SUPABASE_URL=https://your-project.supabase.co
-SUPABASE_SERVICE_ROLE_KEY=your-supabase-service-role-key
-RAZORPAY_KEY_ID=rzp_test_your_razorpay_key_id
-RAZORPAY_KEY_SECRET=your_razorpay_key_secret
-RAZORPAY_WEBHOOK_SECRET=your_razorpay_webhook_secret_here
-RAZORPAY_PLAN_ID_PRO=plan_N3eF9xLxxxxxxxx
-RAZORPAY_PLAN_ID_ENTERPRISE=plan_P8aM2yZyyyyyyyy
-```
-
-#### 4. Local Webhook Testing with ngrok
-Because Razorpay webhooks require an internet-accessible HTTPS endpoint to deliver events, use `ngrok` during local development:
-
-1. Start your backend server:
-   ```bash
-   npm run server
-   # Server runs at http://localhost:5000
-   ```
-2. Start the frontend:
-   ```bash
-   npm run dev
-   # App runs at http://localhost:5173
-   ```
-3. Expose your backend port 5000 with ngrok:
-   ```bash
-   ngrok http 5000
-   ```
-   Copy the generated HTTPS Forwarding URL (e.g., `https://a1b2-c3d4.ngrok-free.app`).
-4. In Razorpay Dashboard:
-   - Navigate to **Settings** $\rightarrow$ **Webhooks** $\rightarrow$ **Add New Webhook**.
-   - **Webhook URL:** `https://<YOUR-NGROK-DOMAIN>/api/subscriptions/webhook`
-   - **Secret:** Enter the string you saved in `RAZORPAY_WEBHOOK_SECRET`.
-   - **Active Events:** Select the following subscription events:
-     - `subscription.authenticated`
-     - `subscription.activated`
-     - `subscription.charged`
-     - `subscription.pending`
-     - `subscription.halted`
-     - `subscription.cancelled`
-     - `subscription.completed`
-     - `payment.failed`
-   - Click **Create Webhook**.
+> AI features are designed to **assist** users while keeping core decisions and actions inside the application's role-based workflows.
 
 ---
 
-### Verification Checklist & Test Cards
+## 🗃️ Data & Application State
 
-Use Razorpay's official recurring test cards to test all happy paths and edge cases:
+Structured domain models and centralized state manage:
 
-| Test Scenario | Card Number | Expiry | CVV | OTP | Expected Outcome |
-|---|---|---|---|---|---|
-| **Subscription Success** | `4111 1111 1111 1111` | Any future date | `123` | `1234` or any | Mandate authenticated $\rightarrow$ Webhook `subscription.charged` $\rightarrow$ DB marked `'active'` $\rightarrow$ AI Copilot unlocked. |
-| **Subscription Failure** | `4000 0000 0000 1002` | Any future date | `123` | *Fails* | Webhook `payment.failed` $\rightarrow$ Status updated to `'pending'` / `'halted'` $\rightarrow$ User alerted. |
-| **Midway Checkout Drop** | Close modal | N/A | N/A | N/A | Row stays in `'created'` status; user is NOT granted premium access. |
-| **Cancellation Cycle** | Click "Cancel subscription" in `/pricing` | N/A | N/A | N/A | Razorpay sets `cancel_at_cycle_end: true` $\rightarrow$ Webhook `subscription.cancelled` $\rightarrow$ Status `'cancelled'`, but access maintained until `end_date`. |
-| **Duplicate Webhooks** | Resend from Razorpay webhook logs | N/A | N/A | N/A | Backend recognizes `payment_events.razorpay_event_id` and idempotently responds with HTTP 200 without duplicate mutations. |
+| | | |
+|---|---|---|
+| 👤 User profiles | 🏢 NGO information | 🆘 Beneficiary cases |
+| 📂 Projects | 🏁 Project milestones | 💰 Contributions |
+| 🙋 Volunteer opportunities | 📝 Volunteer applications | ⏱️ Service hours |
+| 🏛️ CSR initiatives | 🗺️ Government monitoring data | 🪪 Accreditation records |
+| 🔗 Audit records | 🔔 Notifications | |
 
+---
+
+## 📊 Impact Tracking
+
+Metrics are derived directly from the application's underlying records and surfaced on public and institutional dashboards.
+
+| 👥 Beneficiaries reached | 📂 Active projects | 💰 Funds raised | 🧾 Funds utilized |
+|:---:|:---:|:---:|:---:|
+| **🙋 Volunteer participation** | **⏱️ Verified service hours** | **✅ Resolved cases** | **🏢 NGO participation** |
+| **🏛️ CSR initiatives** | **🗺️ Regional project coverage** | | |
+
+---
+
+## 🎯 Project Vision
+
+```mermaid
+flowchart TD
+    A([🧑 Beneficiaries]) --> B[Verified Needs]
+    B --> C{{NGOs + Volunteers + Donors + CSR}}
+    C --> D[Tracked Action]
+    D --> E[Verified Impact]
+    E --> F([📄 Transparent Reporting])
+    style A fill:#fee2e2,stroke:#dc2626,color:#111
+    style C fill:#fef3c7,stroke:#d97706,color:#111
+    style F fill:#dcfce7,stroke:#16a34a,color:#111
+```
+
+The goal is to connect stakeholders, improve visibility into social-impact initiatives, and create a **traceable journey from need to measurable impact**.
+
+---
+
+## 📌 Project Status
+
+NGO Digital Connect is a **demonstration platform** showcasing an integrated digital workflow for beneficiaries, NGOs, volunteers, donors, CSR institutions, government stakeholders, and platform administrators.
+
+**Focus areas:** Social-impact discovery · Beneficiary case management · NGO operations · Volunteer coordination · Donor contributions · CSR project management · Institutional monitoring · AI-assisted workflows · Privacy-aware data handling · Auditability & transparency · Impact measurement
+
+---
+
+<div align="center">
+
+### 🌐 Experience it live
+
+[![Visit Website](https://img.shields.io/badge/Visit_Website_→-ngo--digital--connect.vercel.app-2ea44f?style=for-the-badge)](https://ngo-digital-connect.vercel.app)
+
+<sub>Built to turn **Need** into **Action** and **Action** into verified **Impact**. 💚</sub>
+
+</div>

@@ -1,5 +1,5 @@
 import type { Request, Response } from 'express';
-import { getPlans, type PlanTier, isPlanAtLeast } from '../config/plans.js';
+import { getPlans, type PlanTier } from '../config/plans.js';
 import { RazorpayService } from '../services/razorpay.js';
 import { SupabaseBackendService } from '../services/supabase.js';
 
@@ -29,7 +29,7 @@ export const SubscriptionController = {
         plans: publicPlans,
         razorpayKeyId: RazorpayService.getKeyId(),
       });
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error('[getAvailablePlans] Error:', err);
       res.status(500).json({ error: 'Failed to retrieve subscription plans.' });
     }
@@ -84,7 +84,7 @@ export const SubscriptionController = {
         hasActivePaidSubscription,
         planConfig: plans[effectivePlan],
       });
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error('[getCurrentUserSubscription] Error:', err);
       res.status(500).json({ error: 'Failed to fetch user subscription details.' });
     }
@@ -175,9 +175,10 @@ export const SubscriptionController = {
         currency: 'INR',
         subscription: savedSub,
       });
-    } catch (err: any) {
-      console.error('[createSubscription] Error:', err.message);
-      res.status(500).json({ error: err.message || 'Failed to initiate subscription.' });
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : 'Failed to initiate subscription.';
+      console.error('[createSubscription] Error:', message);
+      res.status(500).json({ error: message });
     }
   },
 
@@ -229,9 +230,10 @@ export const SubscriptionController = {
         message: 'Subscription successfully cancelled. You will maintain access until the end of your current billing period.',
         subscription: updatedSub,
       });
-    } catch (err: any) {
-      console.error('[cancelSubscription] Error:', err.message);
-      res.status(500).json({ error: err.message || 'Failed to cancel subscription.' });
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : 'Failed to cancel subscription.';
+      console.error('[cancelSubscription] Error:', message);
+      res.status(500).json({ error: message });
     }
   },
 
@@ -261,7 +263,8 @@ export const SubscriptionController = {
     }
 
     // 2. Parse JSON payload
-    let payload: any;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    let payload: Record<string, any>;
     try {
       payload = JSON.parse(rawBodyBuffer.toString('utf8'));
     } catch (err) {
@@ -384,9 +387,10 @@ export const SubscriptionController = {
 
       // Return 200 OK immediately
       res.status(200).json({ status: 'success', event_id: eventId });
-    } catch (err: any) {
+    } catch (err: unknown) {
       // Log errors without leaking sensitive credentials
-      console.error('[Webhook Processing Error]:', err.message);
+      const message = err instanceof Error ? err.message : 'Unknown processing error';
+      console.error('[Webhook Processing Error]:', message);
       // Return 200 to acknowledge webhook if error was internal DB so Razorpay does not endlessly storm retries,
       // or return 500 if retry is desired. Razorpay docs recommend 200 once signature is valid unless transient error.
       res.status(200).json({ status: 'error_logged', message: 'Internal processing logged' });
